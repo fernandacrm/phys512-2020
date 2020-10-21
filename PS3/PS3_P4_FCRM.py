@@ -278,13 +278,14 @@ if fft_chain:
     chain = np.loadtxt('PS3_P4chain.txt')    
     t = np.linspace(0,4999,5000)
 
-    fft0 = np.fft.fft(chain[:,0])
-    fft1 = np.fft.fft(chain[:,1])
-    fft2 = np.fft.fft(chain[:,2])
-    fft3 = np.fft.fft(chain[:,3])
-    fft4 = np.fft.fft(chain[:,4])
-    fft5 = np.fft.fft(chain[:,5])
+    fft0 = np.abs(np.fft.rfft(chain[:,0]))
+    fft1 = np.abs(np.fft.rfft(chain[:,1]))
+    fft2 = np.abs(np.fft.rfft(chain[:,2]))
+    fft3 = np.abs(np.fft.rfft(chain[:,3]))
+    fft4 = np.abs(np.fft.rfft(chain[:,4]))
+    fft5 = np.abs(np.fft.rfft(chain[:,5]))
 
+    
     fig, axs = plt.subplots(3,2, figsize=(10,8))#, sharex=True)
     # fig.suptitle('Chains')
     axs[0,0].plot(fft0[1:], color='#2b1d26')
