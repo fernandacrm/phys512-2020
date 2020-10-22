@@ -276,7 +276,6 @@ if get_chain:
 # =============================================================================
 if fft_chain:
     chain = np.loadtxt('PS3_P4chain.txt')    
-    t = np.linspace(0,4999,5000)
 
     fft0 = np.abs(np.fft.rfft(chain[:,0]))
     fft1 = np.abs(np.fft.rfft(chain[:,1]))
@@ -288,17 +287,17 @@ if fft_chain:
     
     fig, axs = plt.subplots(3,2, figsize=(10,8))#, sharex=True)
     # fig.suptitle('Chains')
-    axs[0,0].plot(fft0[1:], color='#2b1d26')
+    axs[0,0].loglog(fft0[1:], color='#2b1d26')
     axs[0,0].legend(['FFT 0'])
-    axs[1,0].plot(fft1[1:], color='#4d283f')
+    axs[1,0].loglog(fft1[1:], color='#4d283f')
     axs[1,0].legend(['FFT 1'])
-    axs[2,0].plot(fft2[1:], color='#692a51')
+    axs[2,0].loglog(fft2[1:], color='#692a51')
     axs[2,0].legend(['FFT 2'])
-    axs[0,1].plot(fft3[1:], color='#852460')
+    axs[0,1].loglog(fft3[1:], color='#852460')
     axs[0,1].legend(['FFT3 3'])
-    axs[1,1].plot(fft4[1:], color='#bf2685')
+    axs[1,1].loglog(fft4[1:], color='#bf2685')
     axs[1,1].legend(['FFT 4'])
-    axs[2,1].plot(fft5[1:], color='#de6ab2')
+    axs[2,1].loglog(fft5[1:], color='#de6ab2')
     axs[2,1].legend(['FFT 5'])    
     fig.savefig('PS3_P4_figffts.png')
 
@@ -364,25 +363,3 @@ if get_chain2:
     chain2,chivec2=run_chain_corr(pars_guess,chifun_spectrum,[x,y,noise],new_lhs_inv,5000)
 
 # =============================================================================
-
-# def run_mcmc(pars,data,par_step,chifun,nstep=5000):
-#     npar=len(pars)
-#     chain=np.zeros([nstep,npar])
-#     chivec=np.zeros(nstep)
-    
-#     chi_cur=chifun(data,pars)
-#     for i in range(nstep):
-#         pars_trial=pars+np.random.randn(npar)*par_step
-#         chi_trial=chifun(data,pars_trial)
-#         #we now have chi^2 at our current location
-#         #and chi^2 in our trial location. decide if we take the step
-#         accept_prob=np.exp(-0.5*(chi_trial-chi_cur))
-#         if np.random.rand(1)<accept_prob: #accept the step with appropriate probability
-#             pars=pars_trial
-#             chi_cur=chi_trial
-#         chain[i,:]=pars
-#         chivec[i]=chi_cur
-#     return chain,chivec
-
-
-# =============================================================================        
