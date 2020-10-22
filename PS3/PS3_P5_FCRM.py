@@ -9,9 +9,9 @@ import numpy as np
 import camb
 from matplotlib import pyplot as plt
 
-get_covmat        = 1  # hold tau=0.05 to get the cov matrix
-useprevious_pars  = 0  # typed results from above to use to insert_dtau
-insert_dtau       = 0  # insert the derivative wrt tau in the cov matrix
+get_covmat        = 0  # hold tau=0.05 to get the cov matrix
+useprevious_pars  = 1  # typed results from above to use to insert_dtau
+insert_dtau       = 1  # insert the derivative wrt tau in the cov matrix
 useprevious_covmat= 0  # typed results from above to use to get_chain
 get_chain         = 0  # float tau to run the chain
 fft_chain         = 0
@@ -28,7 +28,7 @@ noise = wmap[:,2]
 Ninv = np.eye(len(x))/noise**2
 dpar = pars*1e-2
 pars = pars
-tau  = 0.05
+tau  = 0.0544
 tol  = 1e-6    
 
 # =============================================================================
@@ -109,7 +109,7 @@ if get_covmat:
     # chain,chivec=run_mcmc(pars,data,par_sigs,our_chisq,nstep=10000)
     # par_sigs=np.std(chain,axis=0)
     # par_means=np.mean(chain,axis=0)
-    np.savetxt("PS3_P4cderivs.txt",derivs)
+    np.savetxt("PS3_P5derivs.txt",derivs)
   
     print()
     print('Fit parameters = ', pars,', with errors = ', par_sigs)
@@ -117,12 +117,12 @@ if get_covmat:
 
 # =============================================================================
 if useprevious_pars:
-    pars = np.asarray([6.93273685e+01, 2.24913957e-02, 1.13912236e-01, 2.04250577e-09,
-       9.69769787e-01])
-    par_sigs = np.asarray([2.40207892e+00, 5.39639860e-04, 5.22680121e-03, 3.89837370e-11,
-       1.35890077e-02])
-    chisq = 1227.935636135719
-    derivs = np.loadtxt('PS3_P4derivs.txt')
+    pars = np.asarray([6.94112081e+01, 2.25111632e-02, 1.13768814e-01, 2.06000816e-09,
+       9.70449756e-01])
+    par_sigs = np.asarray([2.40475198e+00, 5.40227696e-04, 5.22299389e-03, 3.92961209e-11,
+       1.35950040e-02])
+    chisq = 1227.9401851827436
+    derivs = np.loadtxt('PS3_P5derivs.txt')
     
 # =============================================================================
 if insert_dtau:
@@ -132,7 +132,7 @@ if insert_dtau:
     new_pars=np.insert(pars,3,tau)
     dtau=tau*1e-2
     
-    def get_spectrum(pars,tau=0.05,lmax=2000):
+    def get_spectrum(pars,tau=0.0544,lmax=2000):
         H0=pars[0]      # Hubble constant 
         ombh2=pars[1]   # baryon density
         omch2=pars[2]   # cold dark matter density
@@ -166,22 +166,22 @@ if insert_dtau:
 
 # =============================================================================
 if useprevious_covmat:
-    new_pars = np.asarray([6.93273685e+01, 2.24913957e-02, 1.13912236e-01, 5.00000000e-02,
-       2.04250577e-09, 9.69769787e-01])
-    new_lhs_inv = np.asarray([[ 1.34442496e+01,  2.56742125e-03, -2.39773497e-02,
-         4.13682441e-01,  1.57862792e-09,  8.47955402e-02],
-       [ 2.56742125e-03,  7.22553199e-07, -3.69484024e-06,
-         9.80752752e-05,  3.90867500e-13,  2.07927742e-05],
-       [-2.39773497e-02, -3.69484024e-06,  4.95016318e-05,
-        -7.03316446e-04, -2.60223680e-12, -1.36521523e-04],
-       [ 4.13682441e-01,  9.80752752e-05, -7.03316446e-04,
-         2.22996118e-02,  8.84439826e-11,  3.34434524e-03],
-       [ 1.57862792e-09,  3.90867500e-13, -2.60223680e-12,
-         8.84439826e-11,  3.52303330e-19,  1.32140313e-11],
-       [ 8.47955402e-02,  2.07927742e-05, -1.36521523e-04,
-         3.34434524e-03,  1.32140313e-11,  6.86223452e-04]])
-    new_errors = np.asarray([3.66664009e+00, 8.50031293e-04, 7.03573960e-03, 1.49330545e-01,
-       5.93551455e-10, 2.61958671e-02])
+    new_pars = np.asarray([6.94112081e+01, 2.25111632e-02, 1.13768814e-01, 5.44000000e-02,
+       2.06000816e-09, 9.70449756e-01])
+    new_lhs_inv = np.asarray([[ 1.44661781e+01,  2.80142242e-03, -2.57383274e-02,
+         4.40852277e-01,  1.69706649e-09,  9.33271513e-02],
+       [ 2.80142242e-03,  7.76405615e-07, -4.09998273e-06,
+         1.04141339e-04,  4.17593547e-13,  2.27553704e-05],
+       [-2.57383274e-02, -4.09998273e-06,  5.25184213e-05,
+        -7.51594352e-04, -2.81150852e-12, -1.51290730e-04],
+       [ 4.40852277e-01,  1.04141339e-04, -7.51594352e-04,
+         2.23820091e-02,  8.93402289e-11,  3.58072836e-03],
+       [ 1.69706649e-09,  4.17593547e-13, -2.81150852e-12,
+         8.93402289e-11,  3.58155447e-19,  1.42423453e-11],
+       [ 9.33271513e-02,  2.27553704e-05, -1.51290730e-04,
+         3.58072836e-03,  1.42423453e-11,  7.57677783e-04]])
+    new_errors = np.asarray([3.80344293e+00, 8.81138817e-04, 7.24695945e-03, 1.49606180e-01,
+       5.98460898e-10, 2.75259475e-02])
 
 # =============================================================================
 if get_chain:
@@ -223,7 +223,7 @@ if get_chain:
     
         for i in range(nsamp):
             pars_trial = pars + L @ np.random.randn(npar)*0.4
-            if pars_trial[3] > 0:    
+            if 0.0544-3*0.0073 < pars_trial[3] < 0.0544+3*0.0073:    
                 chi_new    = chifun(pars_trial,data)
                 delta_chi  = chi_new-chisq
                 if np.random.rand(1) < np.exp(-0.5*delta_chi/T):
@@ -240,8 +240,8 @@ if get_chain:
 
     chain,chivec = run_chain_corr(new_pars,chifun_spectrum,[x,y,noise],new_lhs_inv,5000)
    
-    np.savetxt("PS3_P4chain.txt",chain)
-    np.savetxt("PS3_P4chivec.txt",chivec)
+    np.savetxt("PS3_P5chain.txt",chain)
+    np.savetxt("PS3_P5chivec.txt",chivec)
     print('Number of accepted steps:', len(newstep))
     print('Acceptance rate:', len(newstep)/5000)
 
@@ -275,7 +275,7 @@ if get_chain:
 
 # =============================================================================
 if fft_chain:
-    chain = np.loadtxt('PS3_P4chain.txt')    
+    chain = np.loadtxt('PS3_P5chain.txt')    
     t = np.linspace(0,4999,5000)
 
     fft0 = np.fft.fft(chain[:,0])
@@ -357,7 +357,7 @@ if get_chain2:
             
         return chain,chivec
 
-    chain = np.loadtxt('PS3_P4chain.txt')    
+    chain = np.loadtxt('PS3_P5chain.txt')    
     pars_guess=np.median(chain,axis=0)
     # step_size_better=np.std(chain[chain.shape[0]//10:,:],axis=0)
     chain2,chivec2=run_chain_corr(pars_guess,chifun_spectrum,[x,y,noise],new_lhs_inv,5000)
