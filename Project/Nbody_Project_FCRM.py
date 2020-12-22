@@ -164,7 +164,7 @@ dx = .04
 dt=.01
 
 # =============================================================================
-part1 = 1
+part1 = 0
 
 if part1:       # one particle at rest in 3D
     x, y, z  = np.ones([3,1])*25
@@ -209,7 +209,7 @@ if part1:       # one particle at rest in 3D
         plt.savefig('Project_1_3D.png', dpi=100)
 
 # =============================================================================
-part2 = 0
+part2 = 1
 
 if part2:       # two particles in circular orbit in 3D
     x,y,z = [[20,30],[25,25],[25,25]]
@@ -245,7 +245,7 @@ if part2:       # two particles in circular orbit in 3D
     pos_evol=[]
 
 
-    plot_2body=0
+    plot_2body=1
     if plot_2body:
         for i in range(200):
             x,y,z,vx,vy,vz = take_step(x,y,z,vx,vy,vz,dt,m)
@@ -280,33 +280,6 @@ if part2:       # two particles in circular orbit in 3D
     if save_figs:
         plt.savefig('Project_2.png', dpi=100)
     
-
-
-check_grid = 1
-if check_grid:
-    H=density(x,y,z,m)[0]
-    edges_x=density(x,y,z,m)[1]
-    edges_y=density(x,y,z,m)[2]
-    fig,ax = plt.subplots(figsize=(5,5), dpi=100)
-    ax.imshow(
-        H.sum(axis=2),
-        origin="lower",
-        extent=(edges_y.min(), edges_y.max(), edges_x.min(), edges_x.max()), 
-        aspect="auto" )
-    
-    ax.set_xlabel("y")
-    ax.set_ylabel("x")
-    minor_ticks_x = edges_x
-    minor_ticks_y = edges_y
-    ax.set(xlim=(minor_ticks_y[0], minor_ticks_y[-1]), ylim=(minor_ticks_x[0], minor_ticks_x[-1]))
-    ax.set_xticks(minor_ticks_y, minor=True)
-    ax.set_yticks(minor_ticks_x, minor=True)
-    ax.grid(which='both', alpha=0.75, color='w')
-    plt.show()
-    
-    check=H.sum(axis=2)
-    # print(check)
-
 # =============================================================================
 # =============================================================================
 part3 = 0
@@ -365,7 +338,8 @@ if part3:       # two particles in circular orbit in 3D
     
 
 
-check_grid = 0
+# =============================================================================
+check_grid = 1
 if check_grid:
     H=density(x,y,z,m)[0]
     edges_x=density(x,y,z,m)[1]
@@ -390,4 +364,3 @@ if check_grid:
     check=H.sum(axis=2)
     # print(check)
 
-# =============================================================================
